@@ -1,0 +1,33 @@
+name: CI Linux
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Debug]
+    name: 'build-linux [${{ matrix.configuration}}]'
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+    - name: Install libs
+      run: sudo apt update && sudo apt install meson libvulkan-dev glslang-tools libsdl2-dev
+    - name: Configure with cmake
+      run: |
+        export CC=clang-12
+        export CXX=clang++-12
+        ${CXX} --version
+        mkdir build && cd build
+        cmake .. -G Ninja -DCMAKE_BUILD_TYPE=${{matrix.configuration}}
+    - name: Build dependencies
+      run: ninja dependencies
+      working-directory: build
+    - name: Build project
+      run: ninja
+      working-directory: build
