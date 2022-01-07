@@ -139,7 +139,7 @@ bool d3d::InitD3D(
 	return true;
 }
 
-int d3d::EnterMsgLoop( bool (*ptr_display)(float timeDelta) )
+void d3d::EnterMsgLoop( bool (*ptr_display)(float timeDelta) )
 {
 	MSG msg;
 	::ZeroMemory(&msg, sizeof(MSG));
@@ -163,7 +163,6 @@ int d3d::EnterMsgLoop( bool (*ptr_display)(float timeDelta) )
 			lastTime = currTime;
         }
     }
-    return msg.wParam;
 }
 
 D3DLIGHT9 d3d::InitDirectionalLight(D3DXVECTOR3* direction, D3DXCOLOR* color)
