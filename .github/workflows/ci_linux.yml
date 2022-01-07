@@ -17,7 +17,7 @@ jobs:
       with:
         submodules: 'recursive'
     - name: Install libs
-      run: sudo apt install meson libvulkan-dev libsdl2-dev
+      run: sudo apt update && sudo apt install meson libvulkan-dev libsdl2-dev
     - name: Configure with cmake
       run: |
         export CC=clang-12
